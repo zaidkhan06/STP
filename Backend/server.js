@@ -1,17 +1,31 @@
-import dotenv from 'dotenv'
+import dotenv from "dotenv";
 dotenv.config();
-import express from 'express'
-import databaseConnection from './config/db.js'
+import express from 'express';
+import databaseConnection from './config/db.js';
+import authRoutes from './routes/auth.routes.js';
+import cors from 'cors'
+import cookieParser from "cookie-parser";
 
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser());
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true
+  })
+);
+
+
+app.use("/api/auth", authRoutes);
+
+
 
 databaseConnection();
 
-app.use("/",(req, res)=>{
-    res.send("Server is running")
-})
-app.listen(process.env.PORT, ()=>{
+
+app.listen(process.env.PORT, () => {
     console.log("Server is Started", process.env.PORT);
 })
