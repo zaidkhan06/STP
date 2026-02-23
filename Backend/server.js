@@ -3,6 +3,7 @@ dotenv.config();
 import express from 'express';
 import databaseConnection from './config/db.js';
 import authRoutes from './routes/auth.routes.js';
+import codingRoutes from "./routes/coding.routes.js";
 import cors from 'cors'
 import cookieParser from "cookie-parser";
 
@@ -20,6 +21,7 @@ app.use(
 
 
 app.use("/api/auth", authRoutes);
+app.use("/api/coding", codingRoutes);
 
 
 
