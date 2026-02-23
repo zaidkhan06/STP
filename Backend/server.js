@@ -6,6 +6,7 @@ import authRoutes from './routes/auth.routes.js';
 import codingRoutes from "./routes/coding.routes.js";
 import cors from 'cors'
 import cookieParser from "cookie-parser";
+import aptitudeRoutes from "./routes/aptitude.routes.js"
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(
 
 app.use("/api/auth", authRoutes);
 app.use("/api/coding", codingRoutes);
+app.use("/api/aptitude", aptitudeRoutes);
 
 
 
