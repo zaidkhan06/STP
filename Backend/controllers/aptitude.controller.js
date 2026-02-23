@@ -94,3 +94,73 @@ export const checkAnswer = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+export const startMockTest = async (req, res) => {
+  try {
+    const { limit = 20 } = req.query;
+
+    const questions = await AptitudeQuestion.aggregate([
+      { $sample: { size: parseInt(limit) } }
+    ]);
+
+    // remove correctAnswer
+    const sanitized = questions.map((q) => ({
+      _id: q._id,
+      question: q.question,
+      options: q.options,
+      category: q.category,
+      difficulty: q.difficulty
+    }));
+
+    res.json(sanitized);
+
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const submitMockTest = async (req, res) => {
+  try {
+    const { answers, duration } = req.body;
+    const userId = req.user;
+
+    let score = 0;
+    const evaluated = [];
+
+    for (let ans of answers) {
+      const question = await AptitudeQuestion.findById(ans.questionId);
+
+      const isCorrect =
+        question.correctAnswer === ans.selectedAnswer;
+
+      if (isCorrect) score++;
+
+      evaluated.push({
+        questionId: ans.questionId,
+        selectedAnswer: ans.selectedAnswer,
+        correct: isCorrect
+      });
+    }
+
+    const percentage = (score / answers.length) * 100;
+
+    await AptitudeAttempt.create({
+      user: userId,
+      mode: "mock",
+      questions: evaluated,
+      score,
+      totalQuestions: answers.length,
+      percentage,
+      duration
+    });
+
+    res.json({
+      score,
+      total: answers.length,
+      percentage
+    });
+
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+};

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import PracticeModule from "./PracticeModule";
+import MockModule from "./MockModule";
 // import MockModule from "./MockModule"; // later
 
 function Aptitude() {
@@ -107,9 +108,7 @@ function Aptitude() {
           ← Back
         </button>
 
-        <h2 className="text-2xl font-bold">
-          Mock Module Coming Soon 🚀
-        </h2>
+        <MockModule />
       </div>
     );
   }

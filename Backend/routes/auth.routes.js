@@ -22,4 +22,5 @@ router.post(
 );
 router.get("/check", protect, checkAuth);
 
+
 export default router;
