@@ -107,7 +107,6 @@ function Aptitude() {
         >
           ← Back
         </button>
-
         <MockModule />
       </div>
     );

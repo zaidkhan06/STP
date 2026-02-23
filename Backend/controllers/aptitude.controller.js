@@ -1,5 +1,6 @@
 import AptitudeAttempt from "../models/aptitudeAttempt.model.js";
 import AptitudeQuestion from "../models/aptitudeQuestion.model.js";
+import User from "../models/user.model.js";
 
 export const submitPractice = async (req, res) => {
   try {
@@ -39,6 +40,10 @@ export const submitPractice = async (req, res) => {
       totalQuestions: answers.length,
       percentage,
       duration
+    });
+
+    await User.findByIdAndUpdate(userId, {
+      $push: { aptitudeAttempts: attempt._id }
     });
 
     res.json({
@@ -152,6 +157,10 @@ export const submitMockTest = async (req, res) => {
       totalQuestions: answers.length,
       percentage,
       duration
+    });
+
+    await User.findByIdAndUpdate(userId, {
+      $push: { aptitudeAttempts: attempt._id }
     });
 
     res.json({
