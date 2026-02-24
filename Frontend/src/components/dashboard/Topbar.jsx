@@ -32,7 +32,7 @@ function Topbar({ toggleSidebar }) {
   }, []);
 
   return (
-    <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-black/40 backdrop-blur-xl">
+    <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-black/40 backdrop-blur-xl z-[100]">
 
       {/* Left Section */}
       <div className="flex items-center gap-4">
@@ -61,10 +61,10 @@ function Topbar({ toggleSidebar }) {
 
         {/* Dropdown */}
         {open && (
-          <div className="absolute right-0 mt-3 w-48 bg-black border border-white/10 rounded-xl shadow-lg backdrop-blur-xl overflow-hidden z-50">
+          <div className="absolute right-0 mt-3 w-48 bg-black border border-white/10 rounded-xl shadow-lg backdrop-blur-xl overflow-hidden z-[100]">
 
             <button
-              onClick={() => navigate("/profile")}
+              onClick={() => navigate("/dashboard/profile")}
               className="flex items-center gap-3 w-full px-4 py-3 text-sm hover:bg-purple-600/20 transition"
             >
               <User size={16} />

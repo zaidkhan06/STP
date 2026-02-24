@@ -1,0 +1,102 @@
+[
+  {
+    "title": "Reverse String",
+    "description": "Reverse a given string.",
+    "difficulty": "easy",
+    "tags": ["string", "two-pointers"],
+    "platform": "leetcode",
+    "link": "https://leetcode.com/problems/reverse-string/",
+    "companyTags": ["Google", "Amazon"],
+    "isPremium": false
+  },
+  {
+    "title": "Valid Parentheses",
+    "description": "Check if the input string has valid parentheses.",
+    "difficulty": "easy",
+    "tags": ["stack", "string"],
+    "platform": "leetcode",
+    "link": "https://leetcode.com/problems/valid-parentheses/",
+    "companyTags": ["Microsoft", "Facebook"],
+    "isPremium": false
+  },
+  {
+    "title": "Merge Sorted Array",
+    "description": "Merge two sorted arrays into one sorted array.",
+    "difficulty": "easy",
+    "tags": ["array", "two-pointers"],
+    "platform": "leetcode",
+    "link": "https://leetcode.com/problems/merge-sorted-array/",
+    "companyTags": ["Adobe", "Apple"],
+    "isPremium": false
+  },
+  {
+    "title": "Best Time to Buy and Sell Stock",
+    "description": "Find the maximum profit from stock prices.",
+    "difficulty": "easy",
+    "tags": ["array", "greedy"],
+    "platform": "leetcode",
+    "link": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/",
+    "companyTags": ["Amazon", "Google"],
+    "isPremium": false
+  },
+  {
+    "title": "Maximum Subarray",
+    "description": "Find contiguous subarray with largest sum.",
+    "difficulty": "medium",
+    "tags": ["array", "dynamic-programming"],
+    "platform": "leetcode",
+    "link": "https://leetcode.com/problems/maximum-subarray/",
+    "companyTags": ["Microsoft", "Facebook"],
+    "isPremium": false
+  },
+  {
+    "title": "Binary Search",
+    "description": "Implement binary search on sorted array.",
+    "difficulty": "easy",
+    "tags": ["binary-search", "array"],
+    "platform": "leetcode",
+    "link": "https://leetcode.com/problems/binary-search/",
+    "companyTags": ["Amazon", "Google"],
+    "isPremium": false
+  },
+  {
+    "title": "Climbing Stairs",
+    "description": "Count distinct ways to climb stairs.",
+    "difficulty": "easy",
+    "tags": ["dynamic-programming"],
+    "platform": "leetcode",
+    "link": "https://leetcode.com/problems/climbing-stairs/",
+    "companyTags": ["Adobe", "Apple"],
+    "isPremium": false
+  },
+  {
+    "title": "Linked List Cycle",
+    "description": "Detect cycle in linked list.",
+    "difficulty": "easy",
+    "tags": ["linked-list", "two-pointers"],
+    "platform": "leetcode",
+    "link": "https://leetcode.com/problems/linked-list-cycle/",
+    "companyTags": ["Facebook", "Google"],
+    "isPremium": false
+  },
+  {
+    "title": "Product of Array Except Self",
+    "description": "Return array output without division.",
+    "difficulty": "medium",
+    "tags": ["array", "prefix-sum"],
+    "platform": "leetcode",
+    "link": "https://leetcode.com/problems/product-of-array-except-self/",
+    "companyTags": ["Amazon", "Microsoft"],
+    "isPremium": false
+  },
+  {
+    "title": "Trapping Rain Water",
+    "description": "Calculate water trapped between bars.",
+    "difficulty": "hard",
+    "tags": ["two-pointers", "array"],
+    "platform": "leetcode",
+    "link": "https://leetcode.com/problems/trapping-rain-water/",
+    "companyTags": ["Google", "Facebook"],
+    "isPremium": false
+  }
+]

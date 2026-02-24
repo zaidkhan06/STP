@@ -179,3 +179,21 @@ export const checkAuth = (req, res) => {
   res.json({ message: "Authenticated" });
 };
 
+export const logout = (req, res) => {
+  try {
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: false, // true in production (https)
+      sameSite: "lax"
+    });
+
+    return res.status(200).json({
+      message: "Logged out successfully"
+    });
+
+  } catch (error) {
+    return res.status(500).json({
+      message: "Logout failed"
+    });
+  }
+};

@@ -4,12 +4,12 @@ import VerifyEmail from "./pages/VerifyEmail";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Dashboard from "./pages/Dashboard";
 import DashboardLayout from "./components/dashboard/DashboardLayout";
 import Overview from "./pages/dashboard/Overview";
 import Aptitude from "./pages/dashboard/Aptitude";
 import Coding from "./pages/dashboard/Coding";
-import Interviews from "./pages/dashboard/Interviews";
+import ProfilePage from "./pages/ProfilePage"
+import Interview from "./pages/Interview";
 
 function App() {
   return (
@@ -28,8 +28,12 @@ function App() {
           <Route index element={<Overview />} />
           <Route path="aptitude" element={<Aptitude />} />
           <Route path="coding" element={<Coding />} />
-          <Route path="interviews" element={<Interviews />} />
+          <Route path="interviews" element={<Interview />} />
+          <Route path="profile" element={<ProfilePage />} />
+
         </Route>
+
+        
 
       </Routes>
     </BrowserRouter>

@@ -124,10 +124,13 @@ export const startMockTest = async (req, res) => {
   }
 };
 
+
 export const submitMockTest = async (req, res) => {
   try {
     const { answers, duration } = req.body;
+    console.log(req.body);
     const userId = req.user;
+    console.log(req.user);
 
     let score = 0;
     const evaluated = [];
@@ -149,7 +152,7 @@ export const submitMockTest = async (req, res) => {
 
     const percentage = (score / answers.length) * 100;
 
-    await AptitudeAttempt.create({
+   const attempt =  await AptitudeAttempt.create({
       user: userId,
       mode: "mock",
       questions: evaluated,
@@ -173,3 +176,77 @@ export const submitMockTest = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+
+//---------------------------
+
+export const getProfileAnalytics = async (req, res) => {
+    try {
+        const userId = req.user;
+        const attempts = await AptitudeAttempt.find({ user: userId })
+            .sort({ createdAt: 1 });
+
+        if (!attempts.length) {
+            return res.json({
+                totalAttempts: 0,
+                bestScore: 0,
+                averageScore: 0,
+                overallAccuracy: 0,
+                performanceTrend: [],
+                averageDuration: 0
+            });
+        }
+
+        const totalAttempts = attempts.length;
+
+        let totalScore = 0;
+        let totalQuestions = 0;
+        let totalDuration = 0;
+        let bestScore = 0;
+
+        const performanceTrend = attempts.map((a) => {
+            totalScore += a.percentage;
+            totalQuestions += a.totalQuestions;
+            totalDuration += a.duration;
+
+            if (a.percentage > bestScore) {
+                bestScore = a.percentage;
+            }
+
+            return {
+                date: a.createdAt,
+                percentage: a.percentage
+            };
+        });
+
+        const averageScore = totalScore / totalAttempts;
+        const overallAccuracy = totalScore / totalAttempts;
+        const averageDuration = totalDuration / totalAttempts;
+
+        res.json({
+            totalAttempts,
+            bestScore: Math.round(bestScore),
+            averageScore: Math.round(averageScore),
+            overallAccuracy: Math.round(overallAccuracy),
+            performanceTrend,
+            averageDuration: Math.round(averageDuration)
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server Error" });
+
+    }
+}
+
+export const getProfile = async (req, res) =>{
+    try {
+        const user = await User.findById(req.user).select(
+            "name email role createdAt emailVerified"
+        );
+
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({message: "Server error"});
+        
+    }
+}
