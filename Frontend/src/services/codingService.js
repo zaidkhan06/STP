@@ -1,11 +1,15 @@
 import axios from "axios";
 
-const API = "http://localhost:5000/api/coding";
+// const API = "http://localhost:5000/api/coding";
+const API = `${import.meta.env.VITE_API_URL}/coding`
+
+
 
 export const getCodingQuestions = async () => {
-  const res = await axios.get(API, { withCredentials: true });
+  const res = await axios.get(`${API}/`, { withCredentials: true });
   return res.data;
 };
+
 
 export const toggleSolved = async (id) => {
   const res = await axios.post(
@@ -13,5 +17,13 @@ export const toggleSolved = async (id) => {
     {},
     { withCredentials: true }
   );
+  console.log(res.data);
   return res.data;
 };
+
+
+export const getSolvedQues = async () => {
+  const res = await axios.get(`${API}/solve-question`, {withCredentials: true});
+  console.log(res);
+  return res.data.solvedCoding;
+}

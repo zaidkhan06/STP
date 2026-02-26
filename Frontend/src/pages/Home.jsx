@@ -7,12 +7,12 @@ function Home() {
     <div className="min-h-screen bg-black text-white relative overflow-hidden">
 
       {/* Background Glow Effects */}
-      <div className="absolute w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-3xl top-[-200px] left-[-200px]" />
-      <div className="absolute w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-3xl bottom-[-200px] right-[-200px]" />
+      <div className="absolute w-125 h-125 bg-purple-600/20 rounded-full blur-3xl -top-50 -left-50" />
+      <div className="absolute w-125 h-125 bg-blue-600/20 rounded-full blur-3xl -bottom-50 -right-50" />
 
       {/* Navbar */}
       <nav className="relative flex justify-between items-center px-6 md:px-16 py-6 z-10">
-        <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+        <h1 className="text-2xl font-bold bg-linear-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
           StudyTrack
         </h1>
 
@@ -26,7 +26,7 @@ function Home() {
 
           <button
             onClick={() => navigate("/signup")}
-            className="px-5 py-2 text-sm rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 hover:scale-105 transition"
+            className="px-5 py-2 text-sm rounded-lg bg-linear-to-r from-purple-600 to-blue-600 hover:scale-105 transition"
           >
             Get Started
           </button>
@@ -37,7 +37,7 @@ function Home() {
       <section className="relative flex flex-col items-center justify-center text-center px-6 md:px-20 mt-24 z-10">
         <h2 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
           Crack Your{" "}
-          <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+          <span className="bg-linear-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
             Dream Placement
           </span>{" "}
           
@@ -51,7 +51,7 @@ function Home() {
         <div className="flex gap-6 flex-wrap justify-center">
           <button
             onClick={() => navigate("/signup")}
-            className="px-8 py-3 rounded-xl text-white font-semibold bg-gradient-to-r from-purple-600 to-blue-600 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/30 transition"
+            className="px-8 py-3 rounded-xl text-white font-semibold bg-linear-to-r from-purple-600 to-blue-600 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/30 transition"
           >
             Start Preparing
           </button>

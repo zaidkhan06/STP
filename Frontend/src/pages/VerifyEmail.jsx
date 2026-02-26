@@ -23,7 +23,7 @@ function VerifyEmail() {
         // Auto redirect after 3 sec
         setTimeout(() => {
           navigate("/login");
-        }, 3000);
+        }, 2000);
 
       } catch (err) {
         setMessage(
@@ -40,8 +40,8 @@ function VerifyEmail() {
     <div className="min-h-screen flex items-center justify-center bg-black relative overflow-hidden px-4">
 
       {/* Background Glow */}
-      <div className="absolute w-96 h-96 bg-purple-600/20 rounded-full blur-3xl top-[-120px] left-[-120px]" />
-      <div className="absolute w-96 h-96 bg-blue-600/20 rounded-full blur-3xl bottom-[-120px] right-[-120px]" />
+      <div className="absolute w-96 h-96 bg-purple-600/20 rounded-full blur-3xl -top-30 -left-30" />
+      <div className="absolute w-96 h-96 bg-blue-600/20 rounded-full blur-3xl -bottom-30 -right-30" />
 
       <div className="relative w-full max-w-md backdrop-blur-xl bg-white/5 border border-white/10 p-10 rounded-3xl shadow-2xl text-center">
 
@@ -66,7 +66,7 @@ function VerifyEmail() {
 
             <button
               onClick={() => navigate("/login")}
-              className="w-full py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:scale-[1.02] hover:shadow-lg hover:shadow-purple-500/30 transition duration-300"
+              className="w-full py-3 rounded-xl font-semibold text-white bg-linear-to-r from-purple-600 to-blue-600 hover:scale-[1.02] hover:shadow-lg hover:shadow-purple-500/30 transition duration-300"
             >
               Go to Login
             </button>
@@ -87,7 +87,7 @@ function VerifyEmail() {
 
             <button
               onClick={() => navigate("/signup")}
-              className="w-full py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:scale-[1.02] hover:shadow-lg hover:shadow-purple-500/30 transition duration-300"
+              className="w-full py-3 rounded-xl font-semibold text-white bg-linear-to-r from-purple-600 to-blue-600 hover:scale-[1.02] hover:shadow-lg hover:shadow-purple-500/30 transition duration-300"
             >
               Back to Signup
             </button>

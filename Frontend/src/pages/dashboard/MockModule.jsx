@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { getMock, submitMock } from "../../services/aptitudeService";
 
 function MockModule() {
   const [questions, setQuestions] = useState([]);
@@ -24,11 +25,8 @@ function MockModule() {
   }, [timeLeft]);
 
   const fetchMock = async () => {
-    const res = await axios.get(
-      "http://localhost:5000/api/aptitude/mock/start?limit=20",
-      { withCredentials: true }
-    );
-    setQuestions(res.data);
+    const res = await getMock();
+    setQuestions(res);
   };
 
   const handleSelect = (index) => {
@@ -47,17 +45,9 @@ function MockModule() {
         selectedAnswer
       })
     );
-
-    const res = await axios.post(
-      "http://localhost:5000/api/aptitude/mock/submit",
-      {
-        answers: formatted,
-        duration: 600 - timeLeft
-      },
-      { withCredentials: true }
-    );
-
-    setResult(res.data);
+    console.log(formatted, timeLeft);
+    const res = await submitMock(formatted, timeLeft);
+    setResult(res);
     setSubmitted(true);
   };
 

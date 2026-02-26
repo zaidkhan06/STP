@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import {
-  getCodingQuestions,
-  toggleSolved
-} from "../../services/codingService";
+import {getCodingQuestions, getSolvedQues, toggleSolved} from "../../services/codingService";
+
 
 function Coding() {
   const [questions, setQuestions] = useState([]);
@@ -11,17 +9,21 @@ function Coding() {
   useEffect(() => {
     fetchQuestions();
   }, []);
-
+  
   const fetchQuestions = async () => {
     const data = await getCodingQuestions();
+    const solvedQues = await getSolvedQues();
+    console.log(data);
+    console.log(solvedQues);
     setQuestions(data.questions || data);
-    setSolved(data.solvedCoding || []);
+    setSolved(solvedQues || []);
   };
 
   const handleToggle = async (id) => {
     const data = await toggleSolved(id);
     setSolved(data.solvedCoding);
   };
+  
 
   const isSolved = (id) =>
     solved?.some((q) => q.toString() === id.toString());

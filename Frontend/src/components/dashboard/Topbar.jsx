@@ -6,10 +6,9 @@ import { useNavigate } from "react-router-dom";
 function Topbar({ toggleSidebar }) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [user, setUser] = useState("");
   const dropdownRef = useRef();
 
-  const userName = "Zaid Khan"; // Later fetch from backend
-  const userInitial = userName.charAt(0).toUpperCase();
 
   const handleLogout = async () => {
     await axios.post(
@@ -20,7 +19,23 @@ function Topbar({ toggleSidebar }) {
     navigate("/login");
   };
 
-  // Close dropdown when clicking outside
+  const fetchUser = async () => {
+    try {
+      const data = await axios.get(
+        "http://localhost:5000/api/aptitude/profile",
+        { withCredentials: true }
+      )
+      setUser(data.data.name);
+      console.log(data.data.name);
+
+    } catch (error) {
+      console.log(error);       
+    }
+  }
+  useEffect(()=>{
+    fetchUser();
+  }, [])
+  
   useEffect(() => {
     const handler = (e) => {
       if (!dropdownRef.current?.contains(e.target)) {
@@ -32,7 +47,7 @@ function Topbar({ toggleSidebar }) {
   }, []);
 
   return (
-    <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-black/40 backdrop-blur-xl z-[100]">
+    <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-black/40 backdrop-blur-xl z-100">
 
       {/* Left Section */}
       <div className="flex items-center gap-4">
@@ -50,18 +65,18 @@ function Topbar({ toggleSidebar }) {
           onClick={() => setOpen(!open)}
           className="flex items-center gap-3 bg-white/5 px-3 py-2 rounded-xl border border-white/10 hover:bg-white/10 transition"
         >
-          <div className="w-8 h-8 flex items-center justify-center rounded-full bg-gradient-to-r from-purple-600 to-blue-600 text-sm font-bold">
-            {userInitial}
+          <div className="w-8 h-8 flex items-center justify-center rounded-full bg-linear-to-r from-purple-600 to-blue-600 text-sm font-bold">
+            {user.charAt(0)}
           </div>
 
-          <span className="hidden sm:block text-sm">{userName}</span>
+          <span className="hidden sm:block text-sm">{user}</span>
 
           <ChevronDown size={16} />
         </button>
 
         {/* Dropdown */}
         {open && (
-          <div className="absolute right-0 mt-3 w-48 bg-black border border-white/10 rounded-xl shadow-lg backdrop-blur-xl overflow-hidden z-[100]">
+          <div className="absolute right-0 mt-3 w-48 bg-black border border-white/10 rounded-xl shadow-lg backdrop-blur-xl overflow-hidden z-100">
 
             <button
               onClick={() => navigate("/dashboard/profile")}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { getPracticeTopic, questionChecked } from "../../services/aptitudeService";
 
 function TopicPractice({ category, goBack }) {
   const [questions, setQuestions] = useState([]);
@@ -12,23 +12,15 @@ function TopicPractice({ category, goBack }) {
   }, []);
 
   const fetchQuestions = async () => {
-    const res = await axios.get(
-      `http://localhost:5000/api/aptitude/${category}`,
-      { withCredentials: true }
-    );
+    const res = await getPracticeTopic(category)
+    console.log(category);
+    console.log(res);
     setQuestions(res.data);
   };
 
   const handleCheck = async () => {
-    const res = await axios.post(
-      "http://localhost:5000/api/aptitude/check",
-      {
-        questionId: questions[current]._id,
-        selectedAnswer: selected
-      },
-      { withCredentials: true }
-    );
-
+    const id = questions[current]._id;
+    const res = await questionChecked(id, selected);
     setFeedback(res.data);
   };
 
@@ -50,7 +42,7 @@ function TopicPractice({ category, goBack }) {
       <h3 className="text-xl font-semibold mb-6">
         {question.question}
       </h3>
-
+  
       <div className="space-y-4">
         {question.options.map((opt, i) => (
           <button
@@ -70,7 +62,7 @@ function TopicPractice({ category, goBack }) {
       <div className="mt-6 flex gap-4">
         <button
           onClick={handleCheck}
-          className="px-6 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600"
+          className="px-6 py-2 rounded-xl bg-linear-to-r from-purple-600 to-blue-600"
         >
           Check Answer
         </button>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { checkPractice, getQuestions, practiceSubmit } from "../../services/aptitudeService";
 
 function PracticeModule({ category }) {
   const [questions, setQuestions] = useState([]);
@@ -15,12 +15,8 @@ function PracticeModule({ category }) {
   }, [category]);
 
   const fetchQuestions = async () => {
-    const res = await axios.get(
-      `http://localhost:5000/api/aptitude/category/${category}`,
-      { withCredentials: true }
-    );
-    console.log(res);
-    setQuestions(res.data);
+    const res = await getQuestions(category);
+    setQuestions(res);
   };
 
   const handleCheck = async () => {
@@ -28,19 +24,8 @@ function PracticeModule({ category }) {
 
     const questionId = questions[current]._id;
 
-    const res = await axios.post(
-      "http://localhost:5000/api/aptitude/check",
-      {
-        questionId,
-        selectedAnswer: selected
-      },
-      { withCredentials: true }
-    );
-    console.log(res);
-
-
-    setFeedback(res.data);
-
+    const res = await checkPractice(questionId, selected);
+    setFeedback(res);
     setAnswers((prev) => ({
       ...prev,
       [questionId]: selected
@@ -61,18 +46,8 @@ function PracticeModule({ category }) {
       })
     );
 
-    const res = await axios.post(
-      "http://localhost:5000/api/aptitude/practice/submit",
-      {
-        answers: formattedAnswers,
-        category,
-        duration: 0
-      },
-      { withCredentials: true }
-    );
-    console.log(res);
-
-    setResult(res.data);
+    const res = await practiceSubmit(formattedAnswers, category)
+    setResult(res);
     setShowResult(true);
   };
 
@@ -147,7 +122,7 @@ function PracticeModule({ category }) {
         <button
           onClick={handleCheck}
           disabled={selected === null}
-          className="px-6 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 disabled:opacity-50"
+          className="px-6 py-2 rounded-xl bg-linear-to-r from-purple-600 to-blue-600 disabled:opacity-50"
         >
           Check
         </button>

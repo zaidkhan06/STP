@@ -42,8 +42,8 @@ function Signup() {
     <div className="min-h-screen flex items-center justify-center bg-black relative overflow-hidden">
 
       {/* Background Glow */}
-      <div className="absolute w-96 h-96 bg-purple-600/20 rounded-full blur-3xl top-[-100px] left-[-100px]" />
-      <div className="absolute w-96 h-96 bg-blue-600/20 rounded-full blur-3xl bottom-[-100px] right-[-100px]" />
+      <div className="absolute w-96 h-96 bg-purple-600/20 rounded-full blur-3xl -top-25 -left-25" />
+      <div className="absolute w-96 h-96 bg-blue-600/20 rounded-full blur-3xl -bottom-25 -right-25" />
 
       <div className="relative w-full max-w-md backdrop-blur-xl bg-white/5 border border-white/10 p-10 rounded-3xl shadow-2xl">
 
@@ -96,7 +96,7 @@ function Signup() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:scale-[1.02] hover:shadow-lg hover:shadow-purple-500/30 transition duration-300"
+            className="w-full py-3 rounded-xl font-semibold text-white bg-linear-to-r from-purple-600 to-blue-600 hover:scale-[1.02] hover:shadow-lg hover:shadow-purple-500/30 transition duration-300"
           >
             {loading ? "Creating Account..." : "Sign Up"}
           </button>

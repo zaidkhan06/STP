@@ -16,6 +16,7 @@ function Interview() {
       `http://localhost:5000/api/interview/feed?sort=${sort}`,
       { withCredentials: true }
     );
+    console.log(res);
     setPosts(res.data);
   };
 
@@ -66,22 +67,17 @@ function Interview() {
 
               {/* Upvote Column */}
               <div className="flex sm:flex-col items-center justify-center gap-2 px-4 py-3 sm:py-6 bg-white/5 border-b sm:border-b-0 sm:border-r border-white/10 min-w-[70px]">
-                <button
-                  onClick={() => handleUpvote(post._id)}
-                  className="text-lg hover:text-purple-400 transition"
-                >
-                  ▲
-                </button>
+            
 
                 <span className="font-semibold">
-                  {post.upvotes}
+                  {post.upvotes}  
                 </span>
 
                 <button
                   onClick={() => handleUpvote(post._id)}
-                  className="text-lg hover:text-purple-400 transition"
+                  className="text-lg hover:text-purple-400 transition cursor-pointer"
                 >
-                  ▼
+                   ▲
                 </button>
               </div>
 
@@ -91,7 +87,7 @@ function Interview() {
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
                   <div>
-                    <h3 className="font-semibold text-lg break-words">
+                    <h3 className="font-semibold text-lg wrap-break-words">
                       {post.company} | {post.role}
                     </h3>
 
@@ -104,7 +100,7 @@ function Interview() {
                   <div className="flex gap-2 text-xs">
                     {post.upvotes > 20 && (
                       <span className="bg-red-600/20 text-red-400 px-3 py-1 rounded-full">
-                        🔥 Trending
+                        Trending
                       </span>
                     )}
 
@@ -118,7 +114,7 @@ function Interview() {
 
                 {/* Experience */}
                 <div
-                  className={`text-gray-300 leading-relaxed break-words whitespace-pre-wrap transition-all duration-300 ${
+                  className={`text-gray-300 leading-relaxed wrap-break-words whitespace-pre-wrap transition-all duration-300 ${
                     isExpanded ? "max-h-none" : "max-h-32 overflow-hidden"
                   }`}
                 >

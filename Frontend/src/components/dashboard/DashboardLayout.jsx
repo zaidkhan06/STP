@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import Sidebar from "./SideBar";
 import Topbar from "./Topbar";
+import Sidebar from "./Sidebar";
 
 function DashboardLayout() {
   const [open, setOpen] = useState(false);
@@ -31,7 +31,7 @@ function DashboardLayout() {
 
         <Topbar toggleSidebar={() => setOpen(!open)} />
 
-        <main className="flex-1 p-6 bg-gradient-to-br from-black via-gray-900 to-black">
+        <main className="flex-1 p-6 bg-linear-to-br from-black via-gray-900 to-black">
           <Outlet />
         </main>
 
