@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { getMock, submitMock } from "../../services/aptitudeService";
 
 function MockModule() {
@@ -59,7 +58,7 @@ function MockModule() {
       <div className="text-white text-center p-10 bg-white/5 rounded-3xl">
         <h2 className="text-3xl font-bold mb-4">
           Mock Result
-        </h2>
+        </h2> 
         <p>Score: {result.score} / {result.total}</p>
         <p className="text-purple-400">
           {result.percentage.toFixed(2)}%

@@ -29,3 +29,21 @@ export const loginUser = async (userData) => {
     );
     return response.data;
 };
+
+// Forgot Password (send reset email)
+export const forgotPassword = async (emailData) => {
+    const response = await axios.post(
+        `${API}/forgot-password`,
+        emailData
+    );
+    return response.data;
+};
+
+// Reset Password (update password using token)
+export const resetPassword = async (token, passwordData) => {
+    const response = await axios.post(
+        `${API}/reset-password/${token}`,
+        passwordData
+    );
+    return response.data;
+};

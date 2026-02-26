@@ -79,6 +79,14 @@ function Login() {
               className="mt-1 w-full px-4 py-3 rounded-xl bg-black/40 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-300"
             />
           </div>
+          <div className="flex justify-end">
+            <span
+              onClick={() => navigate("/forgot-password")}
+              className="text-sm text-purple-400 hover:underline cursor-pointer "
+            >
+              Forgot Password?
+            </span>
+          </div>
 
           <button
             type="submit"
