@@ -36,27 +36,42 @@ export const toggleUpvote = async (req, res) => {
 
 export const getFeed = async (req, res) => {
   try {
+    const { sort = "trending" } = req.query;
+
     const posts = await InterviewExperience.find()
       .populate("user", "name")
       .lean();
 
-    const rankedPosts = posts.map(post => {
-      const hoursSincePost =
-        (Date.now() - new Date(post.createdAt)) / 3600000;
+    let rankedPosts = [...posts];
 
-      const rankingScore =
-        post.upvotes / Math.pow(hoursSincePost + 2, 1.5);
+    if (sort === "trending") {
+      rankedPosts = posts.map(post => {
+        const hoursSincePost =
+          (Date.now() - new Date(post.createdAt)) / 3600000;
 
-      return {
-        ...post,
-        rankingScore
-      };
-    });
+        const rankingScore =
+          post.upvotes / Math.pow(hoursSincePost + 2, 1.5);
 
-    rankedPosts.sort((a, b) => b.rankingScore - a.rankingScore);
+        return { ...post, rankingScore };
+      });
+
+      rankedPosts.sort((a, b) => b.rankingScore - a.rankingScore);
+    }
+
+    else if (sort === "new") {
+      rankedPosts.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+    }
+
+    else if (sort === "top") {
+      rankedPosts.sort((a, b) => b.upvotes - a.upvotes);
+    }
 
     res.json(rankedPosts);
+
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Server Error" });
   }
 };
