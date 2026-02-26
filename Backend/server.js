@@ -48,8 +48,8 @@ app.use(
   })
 );
 
-// Important: Handle preflight requests
-app.options("*", cors());
+// // Important: Handle preflight requests
+// app.options("*", cors());
 
 /* =========================
    Routes
