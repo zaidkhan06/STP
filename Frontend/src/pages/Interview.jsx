@@ -6,6 +6,7 @@ function Interview() {
   const [posts, setPosts] = useState([]);
   const [sort, setSort] = useState("trending");
   const [expanded, setExpanded] = useState(null);
+  const [upvotedPosts, setUpvotedPosts] = useState([]);
 
   useEffect(() => {
     fetchFeed();
@@ -21,6 +22,7 @@ function Interview() {
   };
 
   const handleUpvote = async (id) => {
+    setUpvotedPosts((prev)=> prev.includes(id) ? prev.filter((postId) => postId !== id) : [...prev, id]);
     await axios.post(
       `http://localhost:5000/api/interview/upvote/${id}`,
       {},
@@ -40,11 +42,10 @@ function Interview() {
           <button
             key={type}
             onClick={() => setSort(type)}
-            className={`px-4 py-2 rounded-xl border text-sm ${
-              sort === type
+            className={`px-4 py-2 rounded-xl border text-sm ${sort === type
                 ? "bg-purple-600/20 border-purple-500"
                 : "bg-white/5 border-white/10"
-            }`}
+              }`}
           >
             {type.toUpperCase()}
           </button>
@@ -67,17 +68,23 @@ function Interview() {
 
               {/* Upvote Column */}
               <div className="flex sm:flex-col items-center justify-center gap-2 px-4 py-3 sm:py-6 bg-white/5 border-b sm:border-b-0 sm:border-r border-white/10 min-w-[70px]">
-            
 
-                <span className="font-semibold">
-                  {post.upvotes}  
+
+                <span className="font-semibold text-white">
+                  {post.upvote}
                 </span>
 
                 <button
+
                   onClick={() => handleUpvote(post._id)}
-                  className="text-lg hover:text-purple-400 transition cursor-pointer"
+                  className={`text-lg hover:text-purple-400 transition cursor-pointer ${upvotedPosts.includes(post._id)
+                      ? "text-purple-400"
+                      : "text-white"
+                    }`}
                 >
-                   ▲
+                  ▲
+                  <p className="text-sm text-gray-300 ">{post.upvotes}</p>
+
                 </button>
               </div>
 
@@ -114,9 +121,8 @@ function Interview() {
 
                 {/* Experience */}
                 <div
-                  className={`text-gray-300 leading-relaxed wrap-break-words whitespace-pre-wrap transition-all duration-300 ${
-                    isExpanded ? "max-h-none" : "max-h-32 overflow-hidden"
-                  }`}
+                  className={`text-gray-300 leading-relaxed wrap-break-words whitespace-pre-wrap transition-all duration-300 ${isExpanded ? "max-h-none" : "max-h-32 overflow-hidden"
+                    }`}
                 >
                   {post.experience}
                 </div>

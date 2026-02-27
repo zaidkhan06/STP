@@ -10,7 +10,6 @@ export const getCodingQuestions = async () => {
   return res.data;
 };
 
-
 export const toggleSolved = async (id) => {
   const res = await axios.post(
     `${API}/${id}/toggle`,
@@ -19,6 +18,7 @@ export const toggleSolved = async (id) => {
   );
   console.log(res.data);
   return res.data;
+
 };
 
 
