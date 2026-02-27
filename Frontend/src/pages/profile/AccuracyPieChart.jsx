@@ -36,8 +36,8 @@ function AccuracyPieChart({ average }) {
                 `${(percent * 100).toFixed(0)}%`
               }
             >
-              <Cell fill="#22c55e" />
-              <Cell fill="#ef4444" />
+              <Cell fill="#a855f7" />
+              <Cell fill="#1f2937" />
             </Pie>
 
             <Tooltip

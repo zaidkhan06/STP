@@ -155,11 +155,10 @@ function Coding() {
                 <td className="px-6 py-4 text-center">
                   <button
                     onClick={() => handleToggle(q._id)}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-                      isSolved(q._id)
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition ${isSolved(q._id)
                         ? "bg-green-600/20 text-green-400"
                         : "bg-white/10 hover:bg-white/20"
-                    }`}
+                      }`}
                   >
                     {isSolved(q._id)
                       ? "Solved ✓"
@@ -177,45 +176,49 @@ function Coding() {
         {questions.map((q) => (
           <div
             key={q._id}
-            className="bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-xl shadow-md"
+            className="bg-gradient-to-br from-white/5 to-white/10 
+                 border border-white/10 
+                 p-4 rounded-2xl 
+                 backdrop-blur-lg 
+                 shadow-lg active:scale-[0.98] transition"
           >
-            <div className="flex justify-between items-start mb-3">
+            {/* Top Section */}
+            <div className="flex justify-between items-start gap-3 mb-3">
               <a
                 href={q.link}
                 target="_blank"
                 rel="noreferrer"
-                className="font-semibold hover:text-purple-400 transition"
+                className="font-semibold text-base leading-snug 
+                     hover:text-purple-400 transition"
               >
                 {q.title}
               </a>
 
               <span
-                className={`px-3 py-1 rounded-full text-xs font-medium ${difficultyColor(
+                className={`px-3 py-1 rounded-full text-[11px] font-semibold whitespace-nowrap ${difficultyColor(
                   q.difficulty
                 )}`}
               >
-                {q.difficulty}
+                {q.difficulty.toUpperCase()}
               </span>
             </div>
 
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-400 capitalize">
-                {q.platform}
-              </span>
+            {/* Platform */}
+            <div className="text-xs text-gray-400 mb-4 capitalize">
+              Platform: {q.platform}
+            </div>
 
-              <button
-                onClick={() => handleToggle(q._id)}
-                className={`px-4 py-2 rounded-xl text-xs font-medium transition ${
-                  isSolved(q._id)
-                    ? "bg-green-600/20 text-green-400"
-                    : "bg-purple-600/20 text-purple-400"
+            {/* Action Button */}
+            <button
+              onClick={() => handleToggle(q._id)}
+              className={`w-full h-10 rounded-xl text-sm font-medium transition 
+          ${isSolved(q._id)
+                  ? "bg-green-600/20 text-green-400 border border-green-500/30"
+                  : "bg-purple-600/20 text-purple-400 border border-purple-500/30 active:bg-purple-600/30"
                 }`}
-              >
-                {isSolved(q._id)
-                  ? "Solved ✓"
-                  : "Solve"}
-              </button>
-            </div>
+            >
+              {isSolved(q._id) ? "Solved ✓" : "Mark as Solved"}
+            </button>
           </div>
         ))}
       </div>

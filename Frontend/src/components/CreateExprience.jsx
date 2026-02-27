@@ -94,7 +94,7 @@ function CreateExperience({ onPost }) {
       </div>
 
       {/* Footer Controls */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 sm:justify-between sm:items-center">
 
         <select
           value={form.difficulty}
@@ -111,10 +111,10 @@ function CreateExperience({ onPost }) {
         <button
           type="submit"
           disabled={loading}
-          className={`px-6 py-2 rounded-xl font-medium transition ${
+          className={`w-full sm:w-auto px-6 py-2 rounded-xl font-medium transition ${
             loading
               ? "bg-gray-600 cursor-not-allowed"
-              : "bg-purple-600/30 hover:bg-purple-600/50"
+              : "bg-purple-600/70 hover:bg-purple-600"
           }`}
         >
           {loading ? "Posting..." : "Post Experience"}
