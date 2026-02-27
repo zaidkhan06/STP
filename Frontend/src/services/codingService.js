@@ -5,8 +5,11 @@ const API = `${import.meta.env.VITE_API_URL}/coding`
 
 
 
-export const getCodingQuestions = async () => {
-  const res = await axios.get(`${API}/`, { withCredentials: true });
+export const getCodingQuestions = async (page = 1, limit = 10) => {
+  const res = await axios.get(
+    `${API}/?page=${page}&limit=${limit}`,
+    { withCredentials: true }
+  );
   return res.data;
 };
 
