@@ -13,9 +13,8 @@ import aptitudeRoutes from "./routes/aptitude.routes.js";
 
 const app = express();
 
-/* =========================
-   Middleware Order Matters
-========================= */
+
+
 
 // Body parser
 app.use(express.json());
@@ -23,10 +22,11 @@ app.use(express.json());
 // Cookie parser
 app.use(cookieParser());
 
-// CORS Configuration (Production Safe)
+// CORS 
 const allowedOrigins = [
-  "http://localhost:5173",          // Local dev
-  process.env.CLIENT_URL            // Main production domain
+  "http://localhost:5173",  // Local dev
+  "http://192.168.1.30:5173",  //Network domain       
+  process.env.CLIENT_URL       // Main production domain
 ];
 
 app.use(
@@ -48,30 +48,24 @@ app.use(
   })
 );
 
-// // Important: Handle preflight requests
-// app.options("*", cors());
 
-/* =========================
-   Routes
-========================= */
 
 app.use("/api/auth", authRoutes);
 app.use("/api/coding", codingRoutes);
 app.use("/api/aptitude", aptitudeRoutes);
 app.use("/api/interview", interviewExprience);
 
-/* =========================
-   Database
-========================= */
 
+//db
 databaseConnection();
 
-/* =========================
-   Server
-========================= */
+//server
+// const PORT = process.env.PORT || 5000;
 
-const PORT = process.env.PORT || 5000;
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+app.listen(5000, "0.0.0.0", () => {
+  console.log("Server running on port 5000");
 });

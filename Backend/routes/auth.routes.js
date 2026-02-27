@@ -5,7 +5,9 @@ import {
   resendVerification,
   loginUser,
   checkAuth,
-  logout
+  logout,
+  forgotPassword,
+  resetPassword
 } from "../controllers/auth.controller.js";
 import verificationLimiter from "../middlewares/rateLimit.middleware.js";
 import {protect} from "../middlewares/auth.middleware.js";
@@ -24,6 +26,9 @@ router.post(
 );
 router.get("/check", protect, checkAuth);
 router.post("/logout", logout);
+
+router.post("/forgot-password", forgotPassword);
+router.post("/reset-password/:token", resetPassword);
 
 
 export default router;

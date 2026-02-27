@@ -12,7 +12,7 @@ export const createCodingQuestion = async (req, res) => {
       tags,
       platform,
       link,
-      companyTags
+      companyTags 
     } = req.body;
 
     const question = await CodingQuestion.create({

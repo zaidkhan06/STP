@@ -118,7 +118,11 @@ export const resendVerification = async (req, res) => {
         html: `
           <h3>Email Verification</h3>
           <p>Click below to verify your account:</p>
-          <a href="${verificationUrl}">${verificationUrl}</a>
+          <a href="${verificationUrl}"  style="padding:10px 20px;
+                  background:linear-gradient(to right,purple,blue);
+                  color:white;
+                  text-decoration:none;
+                  border-radius:5px;">Verify Email</a>
           <p>This link expires in 24 hours.</p>
         `
       });
@@ -195,5 +199,112 @@ export const logout = (req, res) => {
     return res.status(500).json({
       message: "Logout failed"
     });
+  }
+};
+
+
+export const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    const user = await User.findOne({ email });
+
+    // Prevent email enumeration
+    if (!user) {
+      return res.status(200).json({
+        message: "If this email exists, a reset link has been sent"
+      });
+    }
+
+    // Generate reset token using model method
+    const rawToken = user.createPasswordResetToken();
+
+    await user.save({ validateBeforeSave: false });
+
+    const resetUrl = `${process.env.CLIENT_URL}/reset-password/${rawToken}`;
+
+    const htmlTemplate = `
+      <div style="font-family: Arial; padding:20px">
+        <h2>Password Reset Request</h2>
+        <p>You requested a password reset.</p>
+        <a href="${resetUrl}" 
+           style="padding:10px 20px;
+                  background:linear-gradient(to right,purple,blue);
+                  color: white;
+                  text-decoration:none;
+                  border-radius:5px;">
+           Reset Password
+        </a>
+        <p>This link expires in 15 minutes.</p>
+      </div>
+    `;
+
+    try {
+      await sendEmail({
+        to: user.email,
+        subject: "Reset Your Password - Study Track",
+        html: htmlTemplate
+      });
+
+      return res.status(200).json({
+        message: "Reset link sent successfully"
+      });
+
+    } catch (emailError) {
+      // Rollback token if email fails
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpire = undefined;
+      await user.save({ validateBeforeSave: false });
+
+      return res.status(500).json({
+        message: "Email could not be sent. Try again later."
+      });
+    }
+
+  } catch (error) {
+    console.log("FORGOT PASSWORD ERROR:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const resetPassword = async (req, res) => {
+  try {
+    const { token } = req.params;
+    const { password } = req.body;
+
+    // Hash incoming token
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(token)
+      .digest("hex");
+
+    // Find valid user
+    const user = await User.findOne({
+      resetPasswordToken: hashedToken,
+      resetPasswordExpire: { $gt: Date.now() }
+    });
+
+    if (!user) {
+      return res.status(400).json({
+        message: "Invalid or expired reset link"
+      });
+    }
+
+    // Update password (auto hashed by pre-save middleware)
+    user.password = password;
+
+    // Clear reset fields
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+
+    await user.save();
+
+    res.status(200).json({
+      message: "Password reset successful"
+    });
+
+  } catch (error) {
+    console.log("RESET PASSWORD ERROR:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };
