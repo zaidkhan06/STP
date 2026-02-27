@@ -10,6 +10,8 @@ import authRoutes from "./routes/auth.routes.js";
 import interviewExprience from "./routes/exprience.routes.js";
 import codingRoutes from "./routes/coding.routes.js";
 import aptitudeRoutes from "./routes/aptitude.routes.js";
+import paymentRoutes from "./routes/payment.routes.js";
+
 
 const app = express();
 
@@ -54,6 +56,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/coding", codingRoutes);
 app.use("/api/aptitude", aptitudeRoutes);
 app.use("/api/interview", interviewExprience);
+
+app.use("/api/payment", paymentRoutes);
 
 
 //db
