@@ -6,6 +6,7 @@ import {
 } from "../../services/codingService";
 
 function Coding() {
+  const PAGE_SIZE = 10;
   const [questions, setQuestions] = useState([]);
   const [solved, setSolved] = useState([]);
 
@@ -43,14 +44,26 @@ function Coding() {
     try {
       setLoading(true);
 
-      const data = await getCodingQuestions(page, 10);
+      const data = await getCodingQuestions(page, PAGE_SIZE);
 
-      const newQuestions = data.questions;
+      const newQuestions = data?.questions || [];
 
       if (!newQuestions || newQuestions.length === 0) {
         setHasMore(false);
       } else {
-        setQuestions((prev) => [...prev, ...newQuestions]);
+        setQuestions((prev) => {
+          const seen = new Set(prev.map((q) => String(q?._id)));
+          const merged = [...prev];
+          for (const q of newQuestions) {
+            const id = String(q?._id);
+            if (!seen.has(id)) {
+              seen.add(id);
+              merged.push(q);
+            }
+          }
+          return merged;
+        });
+        if (newQuestions.length < PAGE_SIZE) setHasMore(false);
       }
     } catch (error) {
       console.error("Error fetching questions");
@@ -95,6 +108,10 @@ function Coding() {
 
   // Intersection Observer
   useEffect(() => {
+    const target = loaderRef.current;
+    if (!target) return;
+
+    const rootEl = target.closest("main");
     const observer = new IntersectionObserver(
       (entries) => {
         if (
@@ -105,15 +122,24 @@ function Coding() {
           setPage((prev) => prev + 1);
         }
       },
-      { threshold: 0.1, rootMargin: "200px" }
+      { root: rootEl || null, threshold: 0, rootMargin: "300px" }
     );
 
-    if (loaderRef.current) {
-      observer.observe(loaderRef.current);
-    }
+    observer.observe(target);
 
     return () => observer.disconnect();
   }, [loading, hasMore]);
+
+  // Fallback: if content doesn't overflow, auto-load next page
+  useEffect(() => {
+    if (!hasMore || loading) return;
+    const el = loaderRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    if (rect.top <= window.innerHeight + 300) {
+      setPage((prev) => prev + 1);
+    }
+  }, [questions.length, hasMore, loading]);
 
   return (
     <div className="text-white max-w-6xl mx-auto">
