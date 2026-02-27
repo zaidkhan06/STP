@@ -100,9 +100,8 @@ function ProfilePage() {
             </span>
 
             <span className="px-3 py-1 rounded-full bg-blue-600/20 text-blue-200 border border-blue-500/40">
-              Questions Attempted:{" "}
-              <span className="font-semibold">
-                {analytics.totalQuestionsAttempted}
+               Attemptes: 
+              <span className="font-semibold"> {analytics?.totalAttempts}
               </span>
             </span>
           </div>

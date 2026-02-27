@@ -53,7 +53,7 @@ function Support() {
                 UPI ID
               </p>
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-black/30 border border-white/10 rounded-xl text-sm font-mono">
-                yourupi@bank
+                studytrack@paytm
               </div>
               <p className="text-xs text-gray-500">
                 You can replace this placeholder with your actual UPI ID.

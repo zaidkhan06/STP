@@ -183,6 +183,12 @@ export const submitMockTest = async (req, res) => {
 export const getProfileAnalytics = async (req, res) => {
   try {
     const userId = req.user;
+    const user = await User.findById(userId);
+    const codingQuestions = await AptitudeQuestion.find();
+    const totalCodingQuestions = codingQuestions.length;
+    if (!user) return res.status(400).json({ message: "User not found" });
+    console.log(user);
+    const totalSolvedQuestions = user.solvedCoding.length;
     const attempts = await AptitudeAttempt.find({ user: userId })
       .sort({ createdAt: 1 });
 
@@ -193,7 +199,10 @@ export const getProfileAnalytics = async (req, res) => {
         averageScore: 0,
         overallAccuracy: 0,
         performanceTrend: [],
-        averageDuration: 0
+        averageDuration: 0,
+
+
+
       });
     }
 
@@ -229,7 +238,9 @@ export const getProfileAnalytics = async (req, res) => {
       averageScore: Math.round(averageScore),
       overallAccuracy: Math.round(overallAccuracy),
       performanceTrend,
-      averageDuration: Math.round(averageDuration)
+      averageDuration: Math.round(averageDuration),
+      totalSolvedQuestions,
+      totalCodingQuestions
     });
   } catch (error) {
     console.error(error);

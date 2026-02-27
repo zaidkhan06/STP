@@ -12,6 +12,7 @@ import ProfilePage from "./pages/ProfilePage"
 import Interview from "./pages/Interview";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import Support from "./pages/dashboard/Support";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="coding" element={<Coding />} />
           <Route path="interviews" element={<Interview />} />
           <Route path="profile" element={<ProfilePage />} />
+          <Route path="support" element={<Support />} />
 
         </Route>
 
