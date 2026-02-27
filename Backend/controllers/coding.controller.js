@@ -33,15 +33,38 @@ export const createCodingQuestion = async (req, res) => {
 };
 
 // GET ALL QUESTIONS
+// export const getCodingQuestions = async (req, res) => {
+//   try {
+//     const questions = await CodingQuestion.find().sort({
+//       createdAt: -1
+//     });
+
+//     res.json(questions);
+//   } catch (error) {
+//     res.status(500).json({ message: "Server error" });
+//   }
+// };
+
 export const getCodingQuestions = async (req, res) => {
   try {
-    const questions = await CodingQuestion.find().sort({
-      createdAt: -1
-    });
+   const page = parseInt(req.query.page) || 1;
+   const limit = parseInt(req.query.limit) || 10;
 
-    res.json(questions);
+   const skip = (page - 1) * limit;
+   const questions = await CodingQuestion.find()
+   .sort({createdAt: -1})
+   .skip(skip)
+   .limit(limit);
+
+   const total = await CodingQuestion.countDocuments();
+   res.json({
+    questions,
+    hasMore: skip + questions.length < total
+   });
+   
   } catch (error) {
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({message: "Server error"});
+    
   }
 };
 
