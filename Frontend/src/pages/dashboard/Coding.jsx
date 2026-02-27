@@ -1,29 +1,69 @@
-import { useEffect, useState } from "react";
-import {getCodingQuestions, getSolvedQues, toggleSolved} from "../../services/codingService";
-
+import { useEffect, useState, useRef } from "react";
+import {
+  getCodingQuestions,
+  getSolvedQues,
+  toggleSolved,
+} from "../../services/codingService";
 
 function Coding() {
   const [questions, setQuestions] = useState([]);
   const [solved, setSolved] = useState([]);
 
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+
+  const loaderRef = useRef(null);
+
+  // Fetch solved once
+  useEffect(() => {
+    fetchSolved();
+  }, []);
+
+  // Fetch questions when page changes
   useEffect(() => {
     fetchQuestions();
-  }, []);
-  
+  }, [page]);
+
+  const fetchSolved = async () => {
+    try {
+      const solvedQues = await getSolvedQues();
+      setSolved(solvedQues || []);
+    } catch (error) {
+      console.error("Error fetching solved questions");
+    }
+  };
+
   const fetchQuestions = async () => {
-    const data = await getCodingQuestions();
-    const solvedQues = await getSolvedQues();
-    console.log(data);
-    console.log(solvedQues);
-    setQuestions(data.questions || data);
-    setSolved(solvedQues || []);
+    if (!hasMore || loading) return;
+
+    try {
+      setLoading(true);
+
+      const data = await getCodingQuestions(page, 10);
+
+      const newQuestions = data.questions;
+
+      if (!newQuestions || newQuestions.length === 0) {
+        setHasMore(false);
+      } else {
+        setQuestions((prev) => [...prev, ...newQuestions]);
+      }
+    } catch (error) {
+      console.error("Error fetching questions");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleToggle = async (id) => {
-    const data = await toggleSolved(id);
-    setSolved(data.solvedCoding);
+    try {
+      const data = await toggleSolved(id);
+      setSolved(data.solvedCoding);
+    } catch (error) {
+      console.error("Error toggling solved");
+    }
   };
-  
 
   const isSolved = (id) =>
     solved?.some((q) => q.toString() === id.toString());
@@ -34,9 +74,30 @@ function Coding() {
     return "bg-red-500/20 text-red-400";
   };
 
+  // Intersection Observer
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (
+          entries[0].isIntersecting &&
+          !loading &&
+          hasMore
+        ) {
+          setPage((prev) => prev + 1);
+        }
+      },
+      { threshold: 1 }
+    );
+
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [loading, hasMore]);
+
   return (
     <div className="text-white">
-
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-8 gap-4">
         <h2 className="text-2xl sm:text-3xl font-bold">
@@ -44,13 +105,12 @@ function Coding() {
         </h2>
 
         <div className="text-sm bg-white/5 px-4 py-2 rounded-xl border border-white/10 w-fit">
-          Solved: {solved.length} / {questions.length}
+          Solved: {solved.length}
         </div>
       </div>
 
       {/* Desktop Table */}
       <div className="hidden md:block bg-white/5 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-xl">
-
         <table className="w-full text-left">
           <thead className="bg-black/40 border-b border-white/10">
             <tr>
@@ -101,7 +161,9 @@ function Coding() {
                         : "bg-white/10 hover:bg-white/20"
                     }`}
                   >
-                    {isSolved(q._id) ? "Solved ✓" : "Mark Solved"}
+                    {isSolved(q._id)
+                      ? "Solved ✓"
+                      : "Mark Solved"}
                   </button>
                 </td>
               </tr>
@@ -110,7 +172,7 @@ function Coding() {
         </table>
       </div>
 
-      {/* Mobile Card Layout */}
+      {/* Mobile Cards */}
       <div className="md:hidden space-y-4">
         {questions.map((q) => (
           <div
@@ -118,7 +180,6 @@ function Coding() {
             className="bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-xl shadow-md"
           >
             <div className="flex justify-between items-start mb-3">
-
               <a
                 href={q.link}
                 target="_blank"
@@ -135,11 +196,9 @@ function Coding() {
               >
                 {q.difficulty}
               </span>
-
             </div>
 
             <div className="flex justify-between items-center">
-
               <span className="text-sm text-gray-400 capitalize">
                 {q.platform}
               </span>
@@ -152,15 +211,26 @@ function Coding() {
                     : "bg-purple-600/20 text-purple-400"
                 }`}
               >
-                {isSolved(q._id) ? "Solved ✓" : "Solve"}
+                {isSolved(q._id)
+                  ? "Solved ✓"
+                  : "Solve"}
               </button>
-
             </div>
-
           </div>
         ))}
       </div>
 
+      {/* Loader */}
+      {hasMore && (
+        <div
+          ref={loaderRef}
+          className="text-center py-6 text-purple-400"
+        >
+          {loading
+            ? "Loading more questions..."
+            : "Scroll to load more"}
+        </div>
+      )}
     </div>
   );
 }
