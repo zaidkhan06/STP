@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import {
   getCodingQuestions,
   getSolvedQues,
@@ -16,8 +16,6 @@ function Coding() {
   const [search, setSearch] = useState("");
   const [difficulty, setDifficulty] = useState("all");
   const [platform, setPlatform] = useState("all");
-
-  const loaderRef = useRef(null);
 
   // Fetch solved once
   useEffect(() => {
@@ -105,41 +103,6 @@ function Coding() {
     const matchesPlatform = platform === "all" || q?.platform === platform;
     return matchesSearch && matchesDifficulty && matchesPlatform;
   });
-
-  // Intersection Observer
-  useEffect(() => {
-    const target = loaderRef.current;
-    if (!target) return;
-
-    const rootEl = target.closest("main");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (
-          entries[0].isIntersecting &&
-          !loading &&
-          hasMore
-        ) {
-          setPage((prev) => prev + 1);
-        }
-      },
-      { root: rootEl || null, threshold: 0, rootMargin: "300px" }
-    );
-
-    observer.observe(target);
-
-    return () => observer.disconnect();
-  }, [loading, hasMore]);
-
-  // Fallback: if content doesn't overflow, auto-load next page
-  useEffect(() => {
-    if (!hasMore || loading) return;
-    const el = loaderRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    if (rect.top <= window.innerHeight + 300) {
-      setPage((prev) => prev + 1);
-    }
-  }, [questions.length, hasMore, loading]);
 
   return (
     <div className="text-white max-w-6xl mx-auto">
@@ -369,15 +332,17 @@ function Coding() {
         </div>
       )}
 
-      {/* Loader */}
+      {/* Show more */}
       {hasMore && (
-        <div
-          ref={loaderRef}
-          className="text-center py-8 text-purple-300"
-        >
-          {loading
-            ? "Loading more questions..."
-            : "Scroll to load more"}
+        <div className="text-center py-8">
+          <button
+            type="button"
+            onClick={() => setPage((prev) => prev + 1)}
+            disabled={loading}
+            className="px-6 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium text-purple-100 border border-white/15"
+          >
+            {loading ? "Loading..." : "Show more questions"}
+          </button>
         </div>
       )}
     </div>
