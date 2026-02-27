@@ -5,9 +5,9 @@ function Sidebar({ closeSidebar }) {
     "block px-4 py-3 rounded-xl hover:bg-purple-600/20 transition";
 
   return (
-    <div className="h-full w-64 p-6 bg-white/5 backdrop-blur-xl border-r border-white/10">
+    <div className="h-full w-64 p-6 bg-white/5 backdrop-blur-xl border-r border-white/10 ">
 
-      <h2 className="text-2xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+      <h2 className="text-2xl font-bold mb-8 bg-linear-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
         StudyTrack
       </h2>
 

@@ -109,7 +109,7 @@ function MockModule() {
             onClick={() => setShowExitConfirm(true)}
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm hover:bg-white/10 transition"
           >
-            <span className="text-lg leading-none">←</span>
+            <span className="text-sm md:text-md leading-none">←</span>
             <span>Exit Test</span>
           </button>
           <div>

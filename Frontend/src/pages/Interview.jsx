@@ -94,7 +94,7 @@ function Interview() {
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
                   <div>
-                    <h3 className="font-semibold text-lg break-words">
+                    <h3 className="font-semibold text-lg wrap-break-word">
                       {post.company} | {post.role}
                     </h3>
 

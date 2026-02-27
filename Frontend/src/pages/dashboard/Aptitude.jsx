@@ -9,7 +9,7 @@ function Aptitude() {
 
   const topics = ["quantitative", "logical", "verbal"];
 
-  // 🔹 Step 1 — Choose Mode
+  // Step 1 — Choose Mode
   if (!mode) {
     return (
       <div className="grid md:grid-cols-2 gap-8 text-white">
@@ -42,7 +42,7 @@ function Aptitude() {
     );
   }
 
-  // 🔹 Step 2 — Choose Category (Practice Mode)
+  // Step 2 — Choose Category (Practice Mode)
   if (mode === "practice" && !category) {
     return (
       <div className="text-white">
@@ -83,30 +83,16 @@ function Aptitude() {
   if (mode === "practice" && category) {
     return (
       <div className="text-white">
-
-        <button
-          onClick={() => setCategory(null)}
-          className="mb-6 text-purple-400 hover:underline"
-        >
-          ← Change Topic
-        </button>
-
         <PracticeModule category={category} />
-
       </div>
     );
   }
 
-  // 🔹 Step 4 — Mock Mode (placeholder)
+  // Step 4 — Mock Mode (placeholder)
   if (mode === "mock") {
     return (
       <div className="text-white">
-        <button
-          onClick={() => setMode(null)}
-          className="mb-6 text-purple-400 hover:underline"
-        >
-          ← Back
-        </button>
+       
         <MockModule />
       </div>
     );

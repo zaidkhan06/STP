@@ -47,7 +47,7 @@ function Topbar({ toggleSidebar }) {
   }, []);
 
   return (
-    <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-black/40 backdrop-blur-xl z-100">
+    <div className=" right-0 flex items-center justify-between px-6 py-4 border-b border-white/10 bg-black/40 backdrop-blur-xl z-100">
 
       {/* Left Section */}
       <div className="flex items-center gap-4">
