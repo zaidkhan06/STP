@@ -26,16 +26,15 @@ app.use(cookieParser());
 
 // CORS 
 const allowedOrigins = [
-  "http://localhost:5173",  // Local dev
-  "http://192.168.1.30:5173",  //Network domain       
-  process.env.CLIENT_URL       // Main production domain
+  "http://localhost:5173",  // Local dev        
+  process.env.CLIENT_URL  // Main production domain
 ];
 
 app.use(
   cors({
     origin: (origin, callback) => {
       if (
-        !origin ||                             // Allow non-browser tools
+        !origin ||         // Allow non-browser tools
         allowedOrigins.includes(origin) ||     // Exact matches
         origin.includes("vercel.app")          // Allow Vercel preview URLs
       ) {

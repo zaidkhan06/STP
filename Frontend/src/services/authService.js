@@ -6,6 +6,12 @@ console.log(url);
 // const API = "http://localhost:5000/api/auth";
 const API = `${import.meta.env.VITE_API_URL}/auth`;
 
+//check user is auth or not
+export const checkAuth = async () => {
+    const res = await axios.get(`${API}/check`, { withCredentials: true });
+    return res;
+}
+
 //signup 
 export const registerUser = async (userData) => {
     const response = await axios.post(`${API}/register`, userData);
@@ -29,6 +35,16 @@ export const loginUser = async (userData) => {
     );
     return response.data;
 };
+
+//logout user
+export const logoutUser = async () => {
+    await axios.post(
+      `${API}/logout`,
+      {},
+      { withCredentials: true }
+    );
+
+}
 
 // Forgot Password (send reset email)
 export const forgotPassword = async (emailData) => {

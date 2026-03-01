@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { createExperience } from "../services/interviewService";
 
 function CreateExperience({ onPost }) {
   const [form, setForm] = useState({
@@ -16,12 +17,7 @@ function CreateExperience({ onPost }) {
     setLoading(true);
 
     try {
-      await axios.post(
-        "http://localhost:5000/api/interview/post",
-        form,
-        { withCredentials: true }
-      );
-
+      await createExperience(form);
       setForm({
         company: "",
         role: "",
