@@ -5,6 +5,7 @@ function Support() {
   const [loading, setLoading] = useState(false);
   const [qrImage, setQrImage] = useState(null);
   const [qrLoading, setQrLoading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   // --------------------------
   // Generate Dynamic QR
@@ -56,8 +57,8 @@ function Support() {
               "http://localhost:5000/api/payment/verify-payment",
               response
             );
-            alert("Payment Successful 🎉");
             setQrImage(null);
+            setShowSuccess(true);
           } catch {
             alert("Payment verification failed");
           }
@@ -142,11 +143,11 @@ function Support() {
             </div>
 
             {/* QR BOX — UI SAME, LOGIC ADDED */}
-            <div className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-white/15 bg-black/20 py-4 px-3">
+            <div className="flex flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-white/15 bg-black/20 py-5 px-4">
 
               <div
                 onClick={generateQR}
-                className="w-24 h-24 rounded-xl bg-white/5 flex items-center justify-center text-[10px] text-gray-500 cursor-pointer overflow-hidden"
+                className="w-40 h-40 rounded-2xl bg-white/5 flex items-center justify-center text-[11px] text-gray-500 cursor-pointer overflow-hidden border border-white/15 hover:border-purple-400/70 transition"
               >
                 {qrLoading ? (
                   "Loading..."
@@ -162,8 +163,8 @@ function Support() {
               </div>
 
               <p className="text-xs text-gray-400 text-center">
-                Add your UPI QR code image here to make it even easier for
-                students to scan and support.
+                Tap the QR to generate a fresh payment code and scan it with any
+                UPI app to support StudyTrack.
               </p>
             </div>
           </div>
@@ -184,6 +185,52 @@ function Support() {
           better practice experiences and keep them free for everyone.
         </div>
       </div>
+
+      {/* Payment success modal */}
+      {showSuccess && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+          <div className="bg-[#050816] border border-white/10 rounded-3xl px-6 sm:px-8 py-6 sm:py-8 shadow-2xl max-w-md w-full text-white space-y-4">
+            <div className="flex items-center justify-between gap-4">
+              <h2 className="text-lg sm:text-xl font-semibold">
+                Payment successful
+              </h2>
+              <button
+                onClick={() => setShowSuccess(false)}
+                className="text-gray-400 hover:text-gray-200 text-sm"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="space-y-2">
+              <p className="text-sm text-gray-300">
+                Thank you so much for supporting <span className="font-semibold">StudyTrack</span>.
+              </p>
+              <p className="text-xs text-gray-400">
+                Your contribution helps us keep the platform free and keep adding
+                more practice content for students like you.
+              </p>
+            </div>
+
+            <div className="mt-3 rounded-2xl bg-gradient-to-r from-purple-600/20 via-blue-600/15 to-emerald-500/15 border border-white/10 px-4 py-3 text-xs text-gray-200">
+              <p className="font-medium text-sm mb-1">You&apos;re awesome 🎉</p>
+              <p>
+                If you have any feedback or feature ideas, feel free to share
+                them from inside the app. We read every message.
+              </p>
+            </div>
+
+            <div className="flex justify-end pt-2">
+              <button
+                onClick={() => setShowSuccess(false)}
+                className="px-5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-sm transition"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

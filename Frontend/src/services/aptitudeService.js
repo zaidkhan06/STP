@@ -43,3 +43,16 @@ export const questionChecked = async (id,selected) => {
     const res = await axios.post(`${API}/check`, {questionId: id, selectedAnswer:selected}, { withCredentials: true })
 }
 
+
+//------------
+
+//fetch user 
+export const getUser = async () => {
+    const res = await axios.get(
+        `${API}/profile`,
+        { withCredentials: true }
+      )
+      console.log("Me apti service se hu bhiyaaa", res.data);
+      return res.data;
+
+}

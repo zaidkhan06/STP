@@ -2,32 +2,26 @@ import { Menu, ChevronDown, LogOut, User, Bell } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { logoutUser } from "../../services/authService";
+import { getUser } from "../../services/aptitudeService";
 
 function Topbar({ toggleSidebar }) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState(null);
+  console.log(user);
   const dropdownRef = useRef();
 
 
   const handleLogout = async () => {
-    await axios.post(
-      "http://localhost:5000/api/auth/logout",
-      {},
-      { withCredentials: true }
-    );
+    await logoutUser();
     navigate("/login");
   };
 
   const fetchUser = async () => {
     try {
-      const data = await axios.get(
-        "http://localhost:5000/api/aptitude/profile",
-        { withCredentials: true }
-      )
-      setUser(data.data.name);
-      console.log(data.data.name);
-
+      const res = await getUser();
+      setUser(res);
     } catch (error) {
       console.log(error);       
     }
@@ -80,11 +74,11 @@ function Topbar({ toggleSidebar }) {
             className="flex items-center gap-3 bg-white/5 px-3 sm:px-4 py-2 rounded-xl border border-white/10 hover:bg-white/10 transition"
           >
             <div className="w-8 h-8 flex items-center justify-center rounded-full bg-gradient-to-r from-purple-600 to-blue-600 text-sm font-bold">
-              {user.charAt(0)}
+              {user?.name?.charAt(0)}
             </div>
 
             <div className="hidden sm:flex flex-col items-start">
-              <span className="text-sm leading-tight">{user}</span>
+              <span className="text-sm leading-tight">{user?.name}</span>
               <span className="text-[10px] text-gray-400">
                 Logged in
               </span>
