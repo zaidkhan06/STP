@@ -187,8 +187,8 @@ export const logout = (req, res) => {
   try {
     res.clearCookie("token", {
       httpOnly: true,
-      secure: false, // true in production (https)
-      sameSite: "lax"
+      secure: true, // true in production (https)
+      sameSite: "none"
     });
 
     return res.status(200).json({
