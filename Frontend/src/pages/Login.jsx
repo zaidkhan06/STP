@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../services/authService";
+import { googleLoginService, loginUser } from "../services/authService";
+import { signInWithPopup } from "firebase/auth";
+import { auth, provider } from "../firebase/firebase";
+
 
 function Login() {
   const navigate = useNavigate();
@@ -36,6 +39,26 @@ function Login() {
       setLoading(false);
     }
   };
+
+
+  const handleGoogleLogin = async () => {
+  try {
+    const result = await signInWithPopup(auth, provider);
+
+    const idToken = await result.user.getIdToken();
+
+    await googleLoginService(idToken);
+
+    // redirect after login
+    navigate("/dashboard");
+
+  } catch (error) {
+    console.error("Google Login Error:", error);
+  }
+};
+
+
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#050816] via-[#020617] to-black relative overflow-hidden px-4">
@@ -95,6 +118,24 @@ function Login() {
             className="w-full py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:scale-[1.02] hover:shadow-lg hover:shadow-purple-500/30 transition duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {loading ? "Signing in..." : "Login"}
+          </button>
+
+          <div className="relative flex items-center justify-center my-2">
+            <span className="absolute inset-x-0 h-px bg-white/10" />
+            <span className="relative px-3 text-[11px] text-gray-400 bg-[#050816]">
+              or continue with
+            </span>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleGoogleLogin}
+            className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-white/15 bg-black/40 hover:bg-black/60 hover:border-white/40 transition text-sm text-gray-100"
+          >
+            <span className="w-5 h-5 rounded-sm bg-white flex items-center justify-center overflow-hidden">
+              <span className="w-4 h-4 bg-[url('https://www.gstatic.com/images/branding/product/1x/gsa_48dp.png')] bg-cover bg-center" />
+            </span>
+            <span>Sign in with Google</span>
           </button>
         </form>
 

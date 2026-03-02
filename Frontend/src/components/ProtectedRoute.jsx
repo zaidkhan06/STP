@@ -21,7 +21,6 @@ function ProtectedRoute({ children }) {
 
   if (isAuth === null) return null;
   if (!isAuth) return <Navigate to="/login" />;
-
   return children;
 }
 

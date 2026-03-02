@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { createOrder, fetchQr, verifyPayment } from "../../services/supportService";
 
 function Support() {
   const [loading, setLoading] = useState(false);
@@ -13,19 +13,11 @@ function Support() {
   const generateQR = async () => {
     try {
       setQrLoading(true);
-
-      const { data } = await axios.post(
-        "http://localhost:5000/api/payment/create-qr",
-        { amount: 100 }
-      );
-
-      console.log("QR Response:", data);
-
-      setQrImage(data.image_url);
+      const res = await fetchQr();
+      setQrImage(res?.image_url);
 
     } catch (error) {
       console.error("QR Error:", error.response?.data || error);
-      alert("Failed to generate QR");
     } finally {
       setQrLoading(false);
     }
@@ -37,11 +29,8 @@ function Support() {
   const handlePayment = async () => {
     try {
       setLoading(true);
-
-      const { data: order } = await axios.post(
-        "http://localhost:5000/api/payment/create-order",
-        { amount: 100 }
-      );
+      const order = await createOrder()
+      console.log(order);
 
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
@@ -53,10 +42,7 @@ function Support() {
 
         handler: async function (response) {
           try {
-            await axios.post(
-              "http://localhost:5000/api/payment/verify-payment",
-              response
-            );
+            await verifyPayment(response);
             setQrImage(null);
             setShowSuccess(true);
           } catch {

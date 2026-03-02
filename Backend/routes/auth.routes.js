@@ -7,7 +7,8 @@ import {
   checkAuth,
   logout,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  googleAuth
 } from "../controllers/auth.controller.js";
 import verificationLimiter from "../middlewares/rateLimit.middleware.js";
 import {protect} from "../middlewares/auth.middleware.js";
@@ -29,6 +30,8 @@ router.post("/logout", logout);
 
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password/:token", resetPassword);
+
+router.post("/google", googleAuth);
 
 
 export default router;

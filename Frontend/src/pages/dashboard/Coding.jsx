@@ -97,7 +97,7 @@ function Coding() {
   }, [loading, hasMore]);
 
   return (
-    <div className="text-white">
+    <div className="text-white mt-4">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-8 gap-4">
         <h2 className="text-2xl sm:text-3xl font-bold">

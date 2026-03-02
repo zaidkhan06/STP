@@ -20,9 +20,18 @@ const userSchema = new mongoose.Schema(
 
     password: {
       type: String,
-      required: true,
-      minlength: 6
+      minlength: 6,
+      required: function () {
+        return !this.isGoogleUser; // 👈 KEY CHANGE
+      }
     },
+
+    isGoogleUser: {
+      type: Boolean,
+      default: false
+    },
+
+    profilePic: String,
 
     role: {
       type: String,
@@ -60,25 +69,17 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-//
-// Password Hash Middleware
-//
+// Hash password (safe for Google users)
 userSchema.pre("save", async function () {
   if (!this.isModified("password")) return;
-
+  if (!this.password) return; // 👈 prevents hashing undefined
   this.password = await bcrypt.hash(this.password, 10);
 });
 
-//
-// Password Compare Method
-//
 userSchema.methods.matchPassword = function (enteredPassword) {
   return bcrypt.compare(enteredPassword, this.password);
 };
 
-//
-// Email Verification Token Generator
-//
 userSchema.methods.createEmailVerificationToken = function () {
   const rawToken = crypto.randomBytes(32).toString("hex");
 
@@ -92,10 +93,6 @@ userSchema.methods.createEmailVerificationToken = function () {
   return rawToken;
 };
 
-
-//
-// Reset Password Token Generator
-//
 userSchema.methods.createPasswordResetToken = function () {
   const rawToken = crypto.randomBytes(32).toString("hex");
 
@@ -104,7 +101,7 @@ userSchema.methods.createPasswordResetToken = function () {
     .update(rawToken)
     .digest("hex");
 
-  this.resetPasswordExpire = Date.now() + 15 * 60 * 1000; // 15 minutes
+  this.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
 
   return rawToken;
 };

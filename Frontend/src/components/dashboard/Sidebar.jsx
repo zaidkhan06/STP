@@ -14,11 +14,11 @@ function Sidebar({ closeSidebar }) {
     ].join(" ");
 
   return (
-    <div className="h-full w-64 p-6 bg-gradient-to-b from-black/70 via-[#050816] to-black/90 backdrop-blur-xl border-r border-white/10 flex flex-col">
+    <div className="h-full w-64 p-6 bg-linear-to-b from-black/70 via-[#050816] to-black/90 backdrop-blur-xl border-r border-white/10 flex flex-col">
 
       <div>
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+          <h2 className="text-2xl font-bold bg-linear-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
             StudyTrack
           </h2>
           <span className="px-2.5 py-1 rounded-full text-[10px] font-medium bg-white/5 border border-white/10 text-gray-300">

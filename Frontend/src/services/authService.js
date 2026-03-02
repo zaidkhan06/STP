@@ -63,3 +63,13 @@ export const resetPassword = async (token, passwordData) => {
     );
     return response.data;
 };
+
+
+export const googleLoginService = async (token) => {
+    const response = await axios.post(
+        `${API}/google`,
+        { token },
+        { withCredentials: true }
+    );
+    return response.data;
+};

@@ -2,6 +2,7 @@ import User from "../models/user.model.js";
 import crypto from "crypto";
 import generateToken from "../utils/generateToken.js";
 import sendEmail from "../utils/sendEmail.js";
+import admin from "../config/firebaseAdmin.js"
 
 
 // ================= REGISTER =================
@@ -306,5 +307,75 @@ export const resetPassword = async (req, res) => {
   } catch (error) {
     console.log("RESET PASSWORD ERROR:", error);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+export const googleAuth = async (req, res) => {
+  try {
+    const { token } = req.body;
+
+    if (!token) {
+      return res.status(400).json({ message: "Token missing" });
+    }
+
+    // Verify Firebase token
+    const decoded = await admin.auth().verifyIdToken(token);
+
+    const { email, name, picture } = decoded;
+
+    if (!email) {
+      return res.status(400).json({ message: "Invalid Google account" });
+    }
+
+    let user = await User.findOne({ email });
+
+    // If user exists but was normal signup → convert to Google user
+    if (user && !user.isGoogleUser) {
+      user.isGoogleUser = true;
+      user.profilePic = picture;
+      user.emailVerified = true;
+      await user.save();
+    }
+
+    // If user doesn't exist → create new
+    if (!user) {
+      user = await User.create({
+        name,
+        email,
+        profilePic: picture,
+        isGoogleUser: true,
+        emailVerified: true
+      });
+    }
+
+    // Generate JWT
+   const jwtToken = generateToken(user._id);
+
+    // Set HTTP Only Cookie
+    res.cookie("token", jwtToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Google login successful",
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role
+      }
+    });
+
+  } catch (error) {
+    console.error("Google Auth Error:", error);
+    return res.status(401).json({
+      success: false,
+      message: "Google authentication failed"
+    });
   }
 };

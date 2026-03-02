@@ -1,0 +1,14 @@
+import admin from "firebase-admin";
+
+admin.initializeApp({
+  credential: admin.credential.cert({
+    projectId:"studytrack-247d2",
+    clientEmail: "firebase-adminsdk-fbsvc@studytrack-247d2.iam.gserviceaccount.com",
+    privateKey: "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQD2NPpve/r5hcJL\nJKh89CZedZoEUgQ8W726iCB7oKAFM7N0UowqoRHnSHvefmiwHPOnvSMmvJtDoXcG\nTlKxoHF9YTUgS/QM3vQKChtbHDrhHfVksyFj75WLrskgTT8VDCsnYTAD6Pn10IdG\n7t+wUtIP1DJN/x5Imkv2YXRSyeQhhz5F0lWRThOMjRr1J9dlH9Qn0bW59CXQTSag\nwfN3g3kBjbhB7tfJYNCq2UsoOGczN2McJXTs0xGyj7s6GH+ug0yOJGJUSM1VxHlc\nJRNLOVyqN/wkmvzel0fmFqUUI/WSdPjfWmttDRob63A81xcxvraOZEssXVCFknEN\nX4LV7mCHAgMBAAECggEAJkMSc7aP84IthocCZjTSglXYDc7Ug1rQhUdiy5j+oABV\nEFaZxjA05j1rU/xPdvsbhJhjTkGmXCAg2AqJAGYfl61pLQU7aVqmu1QEb1LXoE+L\nE3oLzjTtXSwDFrGFLwID8ivrjdgBgd7v1FQK0E32q5NoY/BUplIloaWrMbMtcGYp\npfC6qpk/xcv77cnRqSRWT+lh5fWB4c6h1BEHwyrYfztWhJBA+5dtHQwngj7mdweT\nEAat4sB8obYZQoc/d2w7N075iC5P1ZGbCyvqH8SisqkcOELOc+L74m02d0Rixi9/\nOUV1sMmwcnSzSz6XTw12HkKtSnhkdI4eeIPMDQGkJQKBgQD+SOg0ssSqoHduYxTN\nNGt/tmyb4M5CEtpInJzgM10ahXRrcSeXYbjNg4XrAJwtuUjkepdN7GlBTeWUGN4o\nm4cb0YlW62k1RdkbULMxXxozb/K9l/2ZfbWWob5MWkqlEfuJ7II7fgBXjpTtgwo0\nq7FQson913vF0C9ryCSk9u/a8wKBgQD33h9hGDdd7bH8TkyDYbKUdONXCTe5FfEW\n9r88LF560Z0Yc9vCy2iRz3D85tSH6tSdjJ6qEmv/4sNjuD7V1x/VRawx826fW9An\ny6b4Lepfk1SAFsM3P5U9ju+qG0gbK8yEP5HlorqrkPmEEmjlFGQ+rO0G08SzaIVV\nfr/y3CHhHQKBgA3k8/M1NXPRUtVQSqmvzJPs5uBZl0ua9hxzmkrR46t4UVUxmKU3\n7L4mCqI9pUsGTcpWPIBAg7vSwtGlzjXP0cEeYO/D6zrC90r7zN7MwITBADWF4ZCK\nguqZKenIIT4FzoXJy4/uoZwnKVIVD/Cy1PyA1PNu28+CQaUVCZON/qsrAoGAY+Gt\nUWn5va7v/xTqPjMbTDmB9uuu+bV+zlsmGrBibimTnWvqjad7/u3RwQefcxnNDaPB\nuBTuUlHlnIR9RZyHpmCKECLhW/QagD7PjMir3lG3Rlpl1hiYIhM8Ppb5yoEuy8f2\nGcwmXsZv1am5fT5nWt5CMXMam5UtzZLi9JGCUX0CgYEA346mSb4lyAw4dhh4LF+O\ntT5DY87Rtz17SIHtV/VbAsSYLfM6B7qIAgI0UBr4a2dcGGvOyux0GoNH+UUTC4Hk\npGC11GXZRljohGzEdQu/G1pextkbhiZFesEssQSHA5uwsL9oyBSakgmYnPJ5Xhu4\n3+L0CMSrWL1SN/Ze3vZdbqI=\n-----END PRIVATE KEY-----\n"   
+  }),
+});
+
+export default admin;
+
+
+// process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
