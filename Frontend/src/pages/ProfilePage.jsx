@@ -70,7 +70,7 @@ function ProfilePage() {
 
       {/* Profile Header */}
       <div className="bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center gap-6 shadow-[0_0_40px_rgba(15,23,42,0.7)]">
-        <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-purple-600 to-indigo-500 flex items-center justify-center text-2xl sm:text-3xl font-bold shadow-lg">
+        <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-linear-to-br from-purple-600 to-indigo-500 flex items-center justify-center text-2xl sm:text-3xl font-bold shadow-lg">
           {user.name.charAt(0)}
         </div>
 
@@ -100,7 +100,7 @@ function ProfilePage() {
             </span>
 
             <span className="px-3 py-1 rounded-full bg-blue-600/20 text-blue-200 border border-blue-500/40">
-               Attemptes: 
+               Attempts: 
               <span className="font-semibold"> {analytics?.totalAttempts}
               </span>
             </span>

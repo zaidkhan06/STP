@@ -176,7 +176,7 @@ function Coding() {
         {questions.map((q) => (
           <div
             key={q._id}
-            className="bg-gradient-to-br from-white/5 to-white/10 
+            className="bg-linear-to-br from-white/5 to-white/10 
                  border border-white/10 
                  p-4 rounded-2xl 
                  backdrop-blur-lg 
