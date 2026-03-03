@@ -1,0 +1,17 @@
+{
+  "name": "StudyTrack",
+  "short_name": "StudyTrack",
+  "description": "Placement prep dashboard for aptitude, coding progress, and interview experiences.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050816",
+  "theme_color": "#050816",
+  "icons": [
+    {
+      "src": "/StLogo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+

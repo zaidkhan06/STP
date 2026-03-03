@@ -40,16 +40,12 @@ function Home() {
 
       {/* Navbar */}
       <nav className="relative flex items-center justify-between px-6 md:px-16 py-5 z-10">
-        <div className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center text-sm font-bold">
-            ST
-          </div>
-          <div className="flex flex-col">
-            <span className="text-lg font-semibold">StudyTrack</span>
-            <span className="text-[11px] text-gray-400">
-              Placement prep, simplified.
-            </span>
-          </div>
+        <div className="flex items-center gap-3">
+          <img
+            src="/StLogo.png"
+            alt="StudyTrack logo"
+            className="absolute sm:top-0.5 sm:left-20 w-20 h-20 sm:w-46 sm:h-46 rounded-2xl object-contain drop-shadow-[0_10px_22px_rgba(168,85,247,0.35)] hover:scale-105 transition-transform duration-200"
+          />
         </div>
 
         <div className="flex items-center gap-3">
@@ -83,7 +79,7 @@ function Home() {
                 : "opacity-0 translate-y-6"
             }`}
           >
-            <p className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-gray-200 animate-pulse">
+            <p className="inline-flex items-center gap-2 px-3 py-1 mt-4 rounded-full bg-white/5 border border-white/10 text-xs text-gray-200 animate-pulse">
               <span className="w-2 h-2 rounded-full bg-emerald-400" />
               Built for placement-focused students
             </p>

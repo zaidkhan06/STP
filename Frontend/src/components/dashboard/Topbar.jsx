@@ -1,6 +1,5 @@
 import { Menu, ChevronDown, LogOut, User, Bell } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../../services/authService";
 import { getUser } from "../../services/aptitudeService";
@@ -9,7 +8,6 @@ function Topbar({ toggleSidebar }) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState(null);
-  console.log(user);
   const dropdownRef = useRef();
 
 

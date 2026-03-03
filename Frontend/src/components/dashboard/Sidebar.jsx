@@ -18,9 +18,19 @@ function Sidebar({ closeSidebar }) {
 
       <div>
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl font-bold bg-linear-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-            StudyTrack
-          </h2>
+          <NavLink
+            to="/dashboard"
+            end
+            onClick={closeSidebar}
+            className="flex items-center gap-3"
+          >
+            <img
+              src="/StLogo.png"
+              alt="StudyTrack logo"
+             
+              className="bg-white/5  border border-transparent w-14 h-14 sm:w-16 sm:h-16 rounded-2xl object-contain drop-shadow-[0_10px_20px_rgba(168,85,247,0.28)] hover:scale-105 transition-transform duration-200"
+            />
+          </NavLink>
           <span className="px-2.5 py-1 rounded-full text-[10px] font-medium bg-white/5 border border-white/10 text-gray-300">
             Beta
           </span>
